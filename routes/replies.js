@@ -5,6 +5,6 @@ const router = express.Router();
 const { getReply } = require('../controllers/replies')
 
 /* GET home page. */
-router.get('/', getReply);
+router.post('/', getReply);
 
 module.exports = router;
