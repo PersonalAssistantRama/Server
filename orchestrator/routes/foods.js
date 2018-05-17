@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 const { getAllFoods } = require('../controllers/food.controller')
+const { getCacheFoods } = require('../middlewares/getCache')
 
 /* GET home page. */
-router.get('/', getAllFoods);
+router.get('/', getCacheFoods, getAllFoods);
 
 module.exports = router;

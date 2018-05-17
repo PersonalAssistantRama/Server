@@ -8,8 +8,6 @@ module.exports = {
       let replies = await axios.post('http://localhost:3004/replies', {
         text: req.body.text
       })
-      
-      client.set('replies', JSON.stringify(replies.data))
 
       return res.status(200).json({
         message: 'get reply success',
