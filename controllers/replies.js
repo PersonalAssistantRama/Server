@@ -4,7 +4,7 @@ const { changeQuery }  = require('../helpers')
 module.exports = {
   getReply(req, res) {
     let input = changeQuery(req.body.text)
-
+    if ( req.body.text )
     axios({
       method: 'get',
       url: `https://api.dialogflow.com/v1/query?v=20170712&query=${input}&lang=id&sessionId=b18621cf-e981-4f93-b380-ee3fa6cf0b56&timezone=Asia/Jakarta`,
