@@ -7,7 +7,19 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const app = express();
 
-mongoose.connect('mongodb://localhost/yupi-dev');
+mongoose.connect(`mongodb://admin:admin@ds225840.mlab.com:25840/yupidev`, (err) => {
+  if(err) {
+    console.log(`error connect to database mlab yupidev`)
+  } else {
+    console.log(`connect to database mlab`)
+  }
+});
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+    console.log('connected to mongoose')
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -20,12 +32,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-    console.log('connected to mongoose')
-});
 
 app.use('/', require('./routes/index'));
 

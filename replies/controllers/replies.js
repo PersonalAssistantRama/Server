@@ -14,8 +14,8 @@ module.exports = {
       })
       .then(data => {
         res.status(200).json({
-          message: 'ok',
-          data: data.data.result.fulfillment.speech,
+          message: 'get replies successfully',
+          data: data.data,
           input: input
         })
       })
