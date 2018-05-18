@@ -33,8 +33,7 @@ module.exports={
             res.status(201).json({
               message:"user is created",
               data:{
-                id:dataUser._id,
-                username:dataUser.username,
+                user:dataUser,
                 token :token
               }
             })
@@ -70,8 +69,7 @@ module.exports={
           res.status(200).json({
             message:"login success",
             data:{
-              id:dataUser._id,
-              username:dataUser.username,
+              user: dataUser,
               token :token
             }
           })
