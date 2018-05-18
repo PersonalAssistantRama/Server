@@ -3,7 +3,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-// const mongoose = require('mongoose')
+const cors = require ('cors')
+const mongoose = require('mongoose')
 require('dotenv').load();
 
 var indexRouter = require('./routes/index');
@@ -11,12 +12,20 @@ var usersRouter = require('./routes/users');
 const moviesRouter= require('./routes/movies')
 
 var app = express();
+mongoose.connect('mongodb://yupiusersdb:yupi123@ds225840.mlab.com:25840/yupiusersdb')
 
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  // we're connected!
+  console.log('=======connected to db==========')
+});
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
