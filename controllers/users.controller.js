@@ -1,4 +1,4 @@
-const User = require('../models/Users')
+const User = require('../models/users')
 const bcrypt = require('bcryptjs');
 const saltRounds = 10;
 const salt = bcrypt.genSaltSync(saltRounds);
