@@ -8,7 +8,5 @@ const gamesController = require('../controllers/games.controller')
 router.get('/quiz', gamesController.getQuiz);
 router.post('/quiz', gamesController.answerQuiz);
 router.post('/addquiz', gamesController.addQuiz);
-router.get('/guessword', gamesController.getGuessWord);
-router.post('/addguessword', gamesController.addGuessWord);
 
 module.exports = router;
