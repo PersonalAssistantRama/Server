@@ -10,5 +10,6 @@ router.use('/foods', require('./foods'));
 router.use('/movies', require('./movies'));
 router.use('/games', require('./games'));
 router.use('/users', require('./users'));
+router.use('/notifications', require('./notifications'));
 
 module.exports = router;
