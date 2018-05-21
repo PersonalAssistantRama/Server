@@ -27,7 +27,6 @@ module.exports={
       }else{
         let user = new User(newUser)
         user.save().then(dataUser=>{
-          console.log("===>",dataUser)
           if(dataUser){
             let token = jwt.sign({id:dataUser._id,username:dataUser.username}, secret)
             res.status(201).json({
@@ -55,14 +54,12 @@ module.exports={
     
   },
   signIn:(req,res)=>{
-    console.log("ini sign in ",req.body)
     User.findOne({
       username:req.body.username
     })
     .exec()
     .then(dataUser=>{
       if(dataUser){
-        console.log("ini data user===",dataUser)
         let checkPass = bcrypt.compareSync(req.body.password,dataUser.password)
         if(checkPass){
           let token = jwt.sign({id:dataUser._id,username:dataUser.username}, secret)
