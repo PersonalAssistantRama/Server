@@ -13,7 +13,7 @@ const notificationSchema = mongoose.Schema({
     type: String,
   },
   date: {
-    type: String
+    type: Date
   }
 }, {
   timestamps: true
