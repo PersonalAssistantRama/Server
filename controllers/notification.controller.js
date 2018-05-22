@@ -1,4 +1,5 @@
 const Notification = require('../models/notification.model')
+const axios = require('axios')
 
 module.exports = {
   getNotification: (req, res) => {
@@ -6,9 +7,16 @@ module.exports = {
       user: req.params.id
     })
       .then(response => {
+        const filter = response.filter(notif => {
+          if(notif.date <= Date.now()) {
+            axios.delete(`http://35.198.243.108/notifications/${notif._id}`)
+          } else {
+            return notif
+          }
+        })
         res.status(200).send({
           message: 'Query notification by user success',
-          data: response
+          data: filter
         })
       })
       .catch(err => {
