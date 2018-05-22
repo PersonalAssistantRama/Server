@@ -11,14 +11,14 @@ client.auth(redisKey, function (err) {
 module.exports = {
   getAll : async (req, res) => {
     try {
-      let foods = await axios.get('https://developers.zomato.com/api/v2.1/search?count=6&lat=-6.281078&lon=106.779703&order=asc',
+      let foods = await axios.get(`https://developers.zomato.com/api/v2.1/search?count=6&lat=${req.body.lat}&lon=${req.body.long}&order=asc`,
       {
         headers:{
           'user-key': foodKey
         }
       })
 
-      client.set('foods', JSON.stringify(foods.data.restaurants))
+      client.set('foods', JSON.stringify(foods.data.restaurants), 'EX', 60)
       res.status(200).json({
         message:'success load zomato',
         data: foods.data.restaurants

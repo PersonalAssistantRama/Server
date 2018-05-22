@@ -17,7 +17,7 @@ module.exports = {
         url: `https://api.themoviedb.org/3/movie/now_playing?api_key=${movieKey}&language=en-US&page=1`
       })
       
-      client.set('movies', JSON.stringify(movies.data.results))
+      client.set('movies', JSON.stringify(movies.data.results), 'EX', 60)
 
       res.status(200).json({
         msg: "success get now playing movies",
