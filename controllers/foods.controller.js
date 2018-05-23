@@ -1,12 +1,5 @@
 const axios = require('axios')
-const redis = require('redis');
 const foodKey = process.env.FOOD_SECRET
-const redisKey = process.env.REDIS_SECRET
-
-const client = redis.createClient('redis://redis-10020.c9.us-east-1-2.ec2.cloud.redislabs.com:10020');
-client.auth(redisKey, function (err) {
-  if (err) throw err;
-})
 
 module.exports = {
   getAll : async (req, res) => {
@@ -17,8 +10,6 @@ module.exports = {
           'user-key': foodKey
         }
       })
-
-      client.set('foods', JSON.stringify(foods.data.restaurants), 'EX', 60)
       res.status(200).json({
         message:'success load zomato',
         data: foods.data.restaurants
