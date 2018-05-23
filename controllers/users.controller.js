@@ -27,7 +27,6 @@ module.exports={
       }else{
         let user = new User(newUser)
         user.save().then(dataUser=>{
-          if(dataUser){
             let token = jwt.sign({id:dataUser._id,username:dataUser.username}, secret)
             res.status(201).json({
               message:"user is created",
@@ -36,22 +35,13 @@ module.exports={
                 token :token
               }
             })
-          }else{
-            res.status(406).json({
-              message:"something wrong"
-            })
-          }
         }).catch(err=>{
-            console.log(err)
-            res.status(404).send(err.message)
+          res.status(400).json({
+            message:"sign up failed!"
+          })
           })
       }
-    }).catch(error =>{
-      res.status(404).json({
-        error
-      })
-    })
-    
+    })    
   },
   signIn:(req,res)=>{
     User.findOne({

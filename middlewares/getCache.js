@@ -4,46 +4,20 @@ client.auth('pUVrMLPB5j36nGu3bfG2LbDXgBVigFRh', function (err) {
     if (err) throw err;
 });
 
-const getCacheFoods = (req, res, next) => {
-  client.get('foods', (err, reply) => {
-    if (err) {
-      res.status(500).json({
-        message:err.message
-      })
-    } else {
-      if (reply) {
-        res.status(200).json({
-          message: 'get all foods redis success',
-          data: JSON.parse(reply)
-        })
-      } else {
-        next()
-      }
-    }
-  })
-}
-
 const getCacheMovies = (req, res, next) => {
   client.get('movies', (err, reply) => {
-    if (err) {
-      res.status(500).json({
-        message:err.message
+    if (reply) {
+      res.status(200).json({
+        message: 'get all Movies redis success',
+        data: JSON.parse(reply)
       })
     } else {
-      if (reply) {
-        res.status(200).json({
-          message: 'get all Movies redis success',
-          data: JSON.parse(reply)
-        })
-      } else {
-        next()
-      }
+      next()
     }
   })
 }
 
 module.exports = {
-  getCacheFoods,
   getCacheMovies
 }
 

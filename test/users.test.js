@@ -90,6 +90,24 @@ describe('Test Users', function () {
           })
     })
 
+    it('sign in should failed because username is wrong', (done) => {
+      const user = {
+        username: 'wrong username',
+        password: 'wrong password',
+      }
+
+      chai.request(app)
+          .post('/users/signin')
+          .send(user)
+          .end((err, res) => {
+            res.should.have.status(400);
+            res.body.should.be.a('object');
+            res.body.should.have.property('message');
+            res.body.message.should.equal('sign in failed!');
+            done();
+          })
+    })
+
     it('sign in should failed because password is wrong', (done) => {
       const user = {
         username: 'test username',

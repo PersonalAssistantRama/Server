@@ -17,12 +17,29 @@ chai.use(chaiHttp);
 
 describe('Test Foods', function () {
   this.timeout(10000)
-  
-  describe('/GET foods', () => {
-    // client.flushdb();
+  describe('/POST foods', () => {
     it('it should GET food list', (done) => {
+      const location = {
+        long: '106.781616',
+        lat: '-6.260719'
+      }
+
       chai.request(app)
-          .get('/foods')
+          .post('/foods')
+          .send(location)
+          .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.a('object');
+              res.body.should.have.property('message');
+              res.body.should.have.property('data');
+              res.body.data.should.be.an('array');
+            done();
+          })
+    })
+
+    it('it should not GET food list', (done) => {
+      chai.request(app)
+          .post('/foods')
           .end((err, res) => {
               res.should.have.status(200);
               res.body.should.be.a('object');

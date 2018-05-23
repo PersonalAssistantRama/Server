@@ -11,7 +11,7 @@ module.exports = {
           if(notif.date <= Date.now()) {
             axios.delete(`http://35.198.243.108/notifications/${notif._id}`)
           } else {
-            return notif
+            return notif;
           }
         })
         res.status(200).send({

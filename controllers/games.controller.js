@@ -3,20 +3,13 @@ const GuessWord = require('../models/guessword.model');
 
 module.exports = {
   async getQuiz(req, res) {
-    try {
-      const quizzes = await Quiz.find();
-      const randomWord = quizzes[ Math.floor(Math.random() * quizzes.length) ];
-      
-      res.status(200).json({
-        message: 'Get quiz success',
-        data: randomWord
-      })
-    } catch (err) {
-      res.status(400).json({
-        message: 'error from catch',
-        err,
-      })
-    }
+    const quizzes = await Quiz.find();
+    const randomWord = quizzes[ Math.floor(Math.random() * quizzes.length) ];
+    
+    res.status(200).json({
+      message: 'Get quiz success',
+      data: randomWord
+    })
   },
   async answerQuiz(req, res) {
     const { id, answer } = req.body;
@@ -52,11 +45,6 @@ module.exports = {
         res.status(201).send({
           message: 'add new quiz success',
           data: result
-        })
-      })
-      .catch(err => {
-        res.status(400).send({
-          message: err.message
         })
       })
   },

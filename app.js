@@ -16,17 +16,25 @@ const passKey = process.env.MLABPASS_SECRET
 const app = express();
 
 //Connect MongoDB Cloud - mlab
-mongoose.connect(`mongodb://${userKey}:${passKey}@ds225840.mlab.com:25840/yupiusersdb`)
+// mongoose.connect(`mongodb://${userKey}:${passKey}@ds225840.mlab.com:25840/yupiusersdb`)
+// const db = mongoose.connection;
+// db.on('error', console.error.bind(console, 'connection error:'));
+// db.once('open', function() {
+//   console.log(`Yupi server connect to mongoDB - Mlab`)
+// });
+
+
+mongoose.connect('mongodb://localhost/yupi-dev');
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-  console.log(`Yupi server connect to mongoDB - Mlab`)
+    console.log('connected to mongoose')
 });
 
 //Connect Redis Cloud - redisLabs
 const client = redis.createClient('redis://redis-10020.c9.us-east-1-2.ec2.cloud.redislabs.com:10020');
 client.auth(redisKey, function (err) {
-    if (err) throw err;
+    // if (err) throw err;
 });
 client.on('connect', function() {
     console.log('Connected to Redis Cloud');
@@ -48,21 +56,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', require('./routes/index'));
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  const err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
+// app.use(function(req, res, next) {
+//   const err = new Error('Not Found');
+//   err.status = 404;
+//   next(err);
+// });
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+// // error handler
+// app.use(function(err, req, res, next) {
+//   // set locals, only providing error in development
+//   res.locals.message = err.message;
+//   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+//   // render the error page
+//   res.status(err.status || 500);
+//   res.render('error');
+// });
 
 module.exports = app;

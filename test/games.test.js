@@ -11,16 +11,6 @@ describe('Test Games', function () {
 
   const answerId = '';
 
-  before(function (done) {
-    mongoose.connect('mongodb://localhost/testDatabase');
-    const db = mongoose.connection;
-    db.on('error', console.error.bind(console, 'connection error'));
-    db.once('open', function() {
-      console.log('We are connected to test database!');
-      done();
-    });
-  });
-
   describe('/POST addquiz', () => {
     it('it should POST new quiz', (done) => {
       let quiz = {
@@ -142,10 +132,5 @@ describe('Test Games', function () {
       })
     })
 
-    after(function(done){
-      mongoose.connection.db.dropDatabase(function(){
-        mongoose.connection.close(done);
-      });
-    });
   })
 })

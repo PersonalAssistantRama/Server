@@ -17,6 +17,21 @@ chai.use(chaiHttp);
 
 describe('Test Movies', function () {
   this.timeout(10000)
+  client.flushall();
+  describe('/GET movies', () => {
+    it('it should GET food list from redis', (done) => {
+      chai.request(app)
+          .get('/movies')
+          .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.a('object');
+              res.body.should.have.property('message');
+              res.body.should.have.property('data');
+              res.body.data.should.be.an('array');
+            done();
+          })
+    })
+  })
 
   describe('/GET movies', () => {
     it('it should GET food list', (done) => {

@@ -11,23 +11,16 @@ client.auth(redisKey, function (err) {
 
 module.exports = {
   getMovies: async (req, res) => {
-    try {
-      let movies = await axios({
-        method: 'get',
-        url: `https://api.themoviedb.org/3/movie/now_playing?api_key=${movieKey}&language=en-US&page=1`
-      })
-      
-      client.set('movies', JSON.stringify(movies.data.results), 'EX', 60)
+    let movies = await axios({
+      method: 'get',
+      url: `https://api.themoviedb.org/3/movie/now_playing?api_key=${movieKey}&language=en-US&page=1`
+    })
+    
+    client.set('movies', JSON.stringify(movies.data.results), 'EX', 60)
 
-      res.status(200).json({
-        msg: "success get now playing movies",
-        data: movies.data.results
-      })
-    } catch (error) {
-      res.status(400).json({
-        msg: 'failed get data',
-        error
-      })
-    }
+    res.status(200).json({
+      message: "success get now playing movies",
+      data: movies.data.results
+    })
   }
 }
